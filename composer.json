@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Bpocallaghan\\FAQ\\": "app/"
+            "Bpocallaghan\\Testimonials\\": "app/"
         }
     },
     "extra": {
