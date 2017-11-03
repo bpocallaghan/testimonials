@@ -1,7 +1,7 @@
 @extends('layouts.website')
 
 @section('content')
-    <section class="content">
+    <section class="content p-3">
         @include('website.partials.page_header')
 
         <div class="row">
@@ -19,10 +19,15 @@
 
                             <div class="carousel-inner text-center">
                                 @foreach($items as $item)
-                                    <div class="item {{ ($loop->first)? 'active':'' }}">
+                                    <div class="carousel-item {{ ($loop->first)? 'active':'' }}">
                                         <blockquote>
+                                            @if($item->image)
+                                                <figure>
+                                                    <img src="{{ uploaded_images_url($item->image) }}" class="img-fluid d-block rounded-circle" style="max-width:200px;margin:10px auto;">
+                                                </figure>
+                                            @endif
                                             <div class="row">
-                                                <div class="col-sm-8 col-sm-offset-2">
+                                                <div class="col-sm-8 offset-sm-2">
                                                     {!! $item->description !!}
                                                     <small>
                                                         {!! $item->customer !!}
@@ -37,8 +42,14 @@
                                 @endforeach
                             </div>
 
-                            <a data-slide="prev" href="#testimonial-carousel" class="left carousel-control"><i class="fa fa-chevron-left"></i></a>
-                            <a data-slide="next" href="#testimonial-carousel" class="right carousel-control"><i class="fa fa-chevron-right"></i></a>
+                            <a class="carousel-control-prev" href="#testimonial-carousel" role="button" data-slide="prev">
+                                <span class="fa fa-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#testimonial-carousel" role="button" data-slide="next">
+                                <span class="fa fa-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
                         </div>
                     </div>
                 </div>
