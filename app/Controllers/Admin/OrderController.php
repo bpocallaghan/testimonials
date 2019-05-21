@@ -5,7 +5,7 @@ namespace Bpocallaghan\Testimonials\Controllers\Admin;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Bpocallaghan\Testimonials\Models\Testimonial;
-use App\Http\Controllers\Admin\AdminController;
+use Bpocallaghan\Titan\Http\Controllers\Admin\AdminController;
 
 class OrderController extends AdminController
 {

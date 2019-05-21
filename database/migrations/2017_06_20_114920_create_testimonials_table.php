@@ -18,6 +18,7 @@ class CreateTestimonialsTable extends Migration
             $table->increments('id')->unique()->index();
             $table->string('customer');
             $table->string('link')->nullable();
+            $table->string('image')->nullable();
             $table->text('description');
             $table->unsignedInteger('list_order')->default(999);
             $table->timestamps();

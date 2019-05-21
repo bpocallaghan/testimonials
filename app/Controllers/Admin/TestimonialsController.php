@@ -6,7 +6,7 @@ use Redirect;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Bpocallaghan\Testimonials\Models\Testimonial;
-use App\Http\Controllers\Admin\AdminController;
+use Bpocallaghan\Titan\Http\Controllers\Admin\AdminController;
 
 class TestimonialsController extends AdminController
 {

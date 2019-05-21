@@ -2,7 +2,7 @@
 
 namespace Bpocallaghan\Testimonials\Models;
 
-use Titan\Models\TitanCMSModel;
+use Bpocallaghan\Titan\Models\TitanCMSModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**

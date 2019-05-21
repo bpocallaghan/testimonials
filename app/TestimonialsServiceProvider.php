@@ -14,8 +14,7 @@ class TestimonialsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views/admin', 'admin.testimonials');
-        $this->loadViewsFrom(__DIR__ . '/../resources/views/website', 'website.testimonials');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'testimonials');
 
         $this->registerCommand(PublishCommand::class, 'publish');
     }
