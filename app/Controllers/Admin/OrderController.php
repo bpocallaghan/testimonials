@@ -6,6 +6,7 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use Bpocallaghan\Testimonials\Models\Testimonial;
 use Bpocallaghan\Titan\Http\Controllers\Admin\AdminController;
+use Illuminate\Http\Response;
 
 class OrderController extends AdminController
 {
@@ -77,5 +78,102 @@ class OrderController extends AdminController
         $row->save();
 
         return $row;
+    }
+
+    /**
+     * Export testimonials data in various formats
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function export(Request $request)
+    {
+        $format = $request->get('format', 'csv');
+        
+        // Get testimonials data
+        $testimonials = Testimonial::orderBy('list_order')->get();
+        
+        switch (strtolower($format)) {
+            case 'json':
+                return $this->exportJson($testimonials);
+            case 'csv':
+            default:
+                return $this->exportCsv($testimonials);
+        }
+    }
+
+    /**
+     * Export data as CSV
+     *
+     * @param $testimonials
+     * @return Response
+     */
+    private function exportCsv($testimonials)
+    {
+        $filename = 'testimonials_export_' . date('Y-m-d_H-i-s') . '.csv';
+        
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ];
+        
+        $callback = function() use ($testimonials) {
+            $file = fopen('php://output', 'w');
+            
+            // CSV headers
+            fputcsv($file, [
+                'ID',
+                'Customer',
+                'Description',
+                'Link',
+                'List Order',
+                'Created At',
+                'Updated At'
+            ]);
+            
+            // CSV data
+            foreach ($testimonials as $testimonial) {
+                fputcsv($file, [
+                    $testimonial->id,
+                    $testimonial->customer,
+                    strip_tags($testimonial->description),
+                    $testimonial->link,
+                    $testimonial->list_order,
+                    $testimonial->created_at,
+                    $testimonial->updated_at
+                ]);
+            }
+            
+            fclose($file);
+        };
+        
+        return response()->stream($callback, 200, $headers);
+    }
+
+    /**
+     * Export data as JSON
+     *
+     * @param $testimonials
+     * @return Response
+     */
+    private function exportJson($testimonials)
+    {
+        $filename = 'testimonials_export_' . date('Y-m-d_H-i-s') . '.json';
+        
+        $data = $testimonials->map(function($testimonial) {
+            return [
+                'id' => $testimonial->id,
+                'customer' => $testimonial->customer,
+                'description' => $testimonial->description,
+                'link' => $testimonial->link,
+                'list_order' => $testimonial->list_order,
+                'created_at' => $testimonial->created_at,
+                'updated_at' => $testimonial->updated_at
+            ];
+        });
+        
+        return response()->json($data)
+            ->header('Content-Disposition', 'attachment; filename="' . $filename . '"')
+            ->header('Content-Type', 'application/json');
     }
 }
