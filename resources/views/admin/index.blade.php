@@ -15,7 +15,24 @@
 
 					@include('titan::admin.partials.info')
 
-					@include('titan::admin.partials.toolbar', ['order' => true])
+					<div class="well well-sm well-toolbar">
+						<div class="row">
+							<div class="col-sm-6">
+								@include('titan::admin.partials.toolbar', ['order' => true])
+							</div>
+							<div class="col-sm-6 text-right">
+								<div class="btn-group">
+									<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<i class="fa fa-download"></i> Export <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<li><a href="{{ url('admin/testimonials/order/export?format=csv') }}"><i class="fa fa-file-csv"></i> Export as CSV</a></li>
+										<li><a href="{{ url('admin/testimonials/order/export?format=json') }}"><i class="fa fa-file-code"></i> Export as JSON</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
 
 					<table id="tbl-list" data-server="false" class="dt-table table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
